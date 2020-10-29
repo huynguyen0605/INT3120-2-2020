@@ -1,21 +1,74 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { globalStyles } from '../styles/global';
 
-export default function Home({ navigation }) {
-    const [reviews, setReviews] = useState([
-        { title: 'Zelda, Breath of Fresh Air', rating: 5, body: 'lorem ipsum', key: '1' },
-        { title: 'Gotta Catch Them All (again)', rating: 4, body: 'lorem ipsum', key: '2' },
-        { title: 'Not So "Final" Fantasy', rating: 3, body: 'lorem ipsum', key: '3' },
-    ]);
+import Test from '../components/Test';
+const styles = StyleSheet.create({
+    overViewSide: { flex: 1, justifyContent: 'space-around', fontSize: 16 },
+    overViewTitle: { ...globalStyles.title },
+    overViewText: { ...globalStyles.text, color: '#18A0FB' }
+});
 
+import dummy from '../const/dummy';
+
+const OverViewTitle = function ({ text }) {
     return (
-        <View style={globalStyles.container}>
-            <FlatList data={reviews} renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => navigation.navigate('ReviewDetails', item)}>
-                    <Text style={globalStyles.titleText}>{item.title}</Text>
-                </TouchableOpacity>
-            )} />
-        </View>
-    );
+        <Text style={styles.overViewTitle}>{text}</Text>
+    )
+};
+const OverViewText = function ({ text }) {
+    return (
+        <Text style={styles.overViewText}>{text}</Text>
+    )
+};
+
+export default class Home extends Component {
+    render() {
+        const { navigation } = this.props;
+        return (
+            <View style={globalStyles.container}>
+                <View style={globalStyles.overview}>
+                    <View style={{ ...styles.overViewSide, paddingLeft: 64 }}>
+                        <OverViewTitle
+                            text='Test Completed'
+                        />
+                        <OverViewTitle
+                            text='Point earned'
+                        />
+                        <OverViewTitle
+                            text='Level'
+                        />
+                    </View>
+                    <View style={styles.overViewSide}>
+                        <OverViewText
+                            text='100'
+                        />
+                        <OverViewText
+                            text='100'
+                        />
+                        <OverViewText
+                            text='100'
+                        />
+                    </View>
+                </View>
+                <FlatList
+                    style={{ flex: 1 }}
+                    data={dummy.tests}
+                    renderItem={({ item, index }) => (
+                        <Test
+                            key={index}
+                            order={index}
+                            title={item.title}
+                            completed={item.completed}
+                            correct={item.correct}
+                            total={item.total}
+                            onPress={() => navigation.navigate('Quizz', item)}
+                        />
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                />
+
+            </View>
+        );
+    }
 }

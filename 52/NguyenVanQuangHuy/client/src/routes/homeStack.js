@@ -2,7 +2,7 @@ import React from 'react';
 
 import { createStackNavigator } from 'react-navigation-stack';
 import Home from '../screens/home';
-import ReviewDetails from '../screens/reviewDetails';
+import Quizz from '../screens/quizz';
 import ScreenHeader from '../components/Header/ScreenHeader';
 const screens = {
     Home: {
@@ -13,11 +13,11 @@ const screens = {
             }
         },
     },
-    ReviewDetails: {
-        screen: ReviewDetails,
+    Quizz: {
+        screen: Quizz,
         navigationOptions: ({ navigation }) => {
             return {
-                headerTitle: () => <ScreenHeader title='Review Details' noIcon={true} navigation={navigation} />
+                headerTitle: () => <ScreenHeader title='' noIcon={true} navigation={navigation} />
             }
         },
     },

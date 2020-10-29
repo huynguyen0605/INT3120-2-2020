@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 export const globalStyles = StyleSheet.create({
-    titleText: {
-        fontSize: 18,
+    titleHeader: {
+        fontSize: 24,
         fontWeight: 'bold',
         color: '#333',
     },
@@ -12,6 +12,20 @@ export const globalStyles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        padding: 20,
+        // padding: 20,
     },
+    title: {
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
+    text: {
+        fontSize: 16
+    },
+    overview: {
+        height: 144,
+        width: '100%',
+        backgroundColor: 'white',
+        display: 'flex',
+        flexDirection: 'row'
+    }
 });
