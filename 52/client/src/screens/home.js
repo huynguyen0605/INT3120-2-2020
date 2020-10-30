@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     overViewText: { ...globalStyles.text, color: '#18A0FB' }
 });
 
-import dummy from '../const/dummy';
+import testService from '../services/testService';
 
 const OverViewTitle = function ({ text }) {
     return (
@@ -23,6 +23,18 @@ const OverViewText = function ({ text }) {
 };
 
 export default class Home extends Component {
+    state = {
+        tests: []
+    }
+    componentDidMount() {
+        testService.getRecommendTest().then(data => {
+            this.setState({
+                tests: data
+            });
+        }).catch(error => {
+            console.log('huynvq::===========>error', error);
+        });
+    };
     render() {
         const { navigation } = this.props;
         return (
@@ -53,7 +65,7 @@ export default class Home extends Component {
                 </View>
                 <FlatList
                     style={{ flex: 1 }}
-                    data={dummy.tests}
+                    data={this.state.tests}
                     renderItem={({ item, index }) => (
                         <Test
                             key={index}
