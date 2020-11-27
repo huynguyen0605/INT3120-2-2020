@@ -1,13 +1,14 @@
-import { FlatList, Image, Modal, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, Modal, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React, { Component } from 'react';
 
 import Answer from '../components/Answer';
 import CustomIndicator from '../components/CustomIndicator';
 import SvgManager from '../assets/SvgManager';
 import SvgUri from 'react-native-svg-uri';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { globalStyles } from '../styles/global';
 import testService from '../services/testService';
+
+import CustomModal from '../components/CustomModal';
 
 const styles = StyleSheet.create({
     quizzContainer: {
@@ -46,52 +47,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 4
     },
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 22
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
-    },
-    openButton: {
-        backgroundColor: "#F194FF",
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center"
-    }
 });
 export default class Quizz extends Component {
     state = {
         quizzs: [],
-        currentQuizzIndex: null
+        currentQuizzIndex: null,
+        visibleModal: false,
+        currentCorrectAnswer: null,
+        selectedAnswer: null
     };
     componentDidMount() {
         this.getQuizzs();
     };
-    getQuizzs() {
+    getQuizzs = () => {
         const test = this.props.navigation.state.params;
         const { id: testId } = test;
         testService.getQuizz(testId).then(quizzs => {
@@ -99,25 +67,52 @@ export default class Quizz extends Component {
                 quizzs: quizzs,
                 currentQuizzIndex: 0
             })
+        }).catch(error => {
+
         });
     };
-    showFinish() {
+    submitQuizz = (quizzId, answer) => {
+        let correctAnswer = answer;
+        this.setState({
+            selectedAnswer: answer
+        })
+        testService.submitQuizz(quizzId, answer).then(data => {
+            console.log('huynvq::==============>data', data);
+            if (data.errcode) {
+                correctAnswer = data.data.correctAnswer;
+            };
+            this.setState({
+                currentCorrectAnswer: correctAnswer
+            })
+        }).catch(error => {
+            console.log('huynvq::===============>error', error);
+        });
+    };
+    showFinish = () => {
 
     };
+    resetAnswer = () => {
+        this.setState({
+            currentCorrectAnswer: null,
+            selectedAnswer: null
+        })
+    };
     nextQuizz = () => {
-        const { quizzs } = this.state;
+        const { quizzs, currentQuizzIndex, navigation } = this.state;
+        this.resetAnswer();
         if (currentQuizzIndex < quizzs.length) {
             this.setState({
                 currentQuizzIndex: currentQuizzIndex + 1
             })
         } else {
-            this.showFinish();
+            navigation.navigate('Home', {});
         };
     };
     prevQuizz = () => {
         const { navigation } = this.props;
         // const {  } = this.state;
         const { currentQuizzIndex } = this.state;
+        this.resetAnswer();
         if (currentQuizzIndex > 0) {
             this.setState({
                 currentQuizzIndex: currentQuizzIndex - 1
@@ -126,13 +121,29 @@ export default class Quizz extends Component {
             navigation.navigate('Home', {});
         }
     };
+    showHint = () => {
+        this.setState({
+            visibleModal: true
+        });
+    };
+    hideHint = () => {
+        this.setState({
+            visibleModal: false
+        });
+    };
     render() {
-        const { quizzs, currentQuizzIndex } = this.state,
+        const { quizzs, currentQuizzIndex, visibleModal, currentCorrectAnswer, selectedAnswer } = this.state,
             currentQuizz = quizzs[currentQuizzIndex];
-        let { title, answers } = currentQuizz ? currentQuizz : {};
+        let { title, answers, hint, id: quizzId } = currentQuizz ? currentQuizz : {};
+        hint = hint ? hint : ``;
         if (!currentQuizz) return <CustomIndicator />;
         return (
             <View style={globalStyles.container}>
+                <CustomModal
+                    modalText={hint}
+                    visible={visibleModal}
+                    onHide={this.hideHint}
+                />
                 <View style={styles.questionContainer}>
                     <Text style={styles.questionText}>
                         {`${currentQuizzIndex + 1}. ${title}`}
@@ -146,6 +157,10 @@ export default class Quizz extends Component {
                                 key={index}
                                 order={index}
                                 answer={item}
+                                quizzId={quizzId}
+                                submitQuizz={this.submitQuizz}
+                                currentCorrectAnswer={currentCorrectAnswer}
+                                selectedAnswer={selectedAnswer}
                             />)
                         }}
                         keyExtractor={(item, index) => index.toString()}
@@ -170,22 +185,6 @@ export default class Quizz extends Component {
                         </View>
                     </TouchableOpacity>
                 </View>
-                <Modal isVisible={true}>
-                    <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Text style={styles.modalText}>Hello World!</Text>
-
-                            <TouchableOpacity
-                                style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-                            // onPress={() => {
-                            //     setModalVisible(!modalVisible);
-                            // }}
-                            >
-                                <Text style={styles.textStyle}>Hide Modal</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
             </View>
         );
     };

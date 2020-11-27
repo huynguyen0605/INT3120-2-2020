@@ -5,7 +5,10 @@ const testService = {
         return axios.get('test');
     },
     getQuizz(testId) {
-        return axios.get(`quizz?testId=${testId}`)
+        return axios.get(`quizz?testId=${testId}`);
+    },
+    submitQuizz(quizzId, answer) {
+        return axios.post(`quizz/${quizzId}/answer/${answer}`);
     }
 };
 

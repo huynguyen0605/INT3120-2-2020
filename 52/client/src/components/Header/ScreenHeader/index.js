@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import { globalStyles } from '../../../styles/global';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class screenHeader extends Component {
     openMenu = () => {
