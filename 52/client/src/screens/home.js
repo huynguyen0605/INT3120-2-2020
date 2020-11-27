@@ -1,15 +1,17 @@
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
-import { globalStyles } from '../styles/global';
 
 import Test from '../components/Test';
+import { globalStyles } from '../styles/global';
+import testService from '../services/testService';
+
 const styles = StyleSheet.create({
     overViewSide: { flex: 1, justifyContent: 'space-around', fontSize: 16 },
     overViewTitle: { ...globalStyles.title },
     overViewText: { ...globalStyles.text, color: '#18A0FB' }
 });
 
-import testService from '../services/testService';
+
 
 const OverViewTitle = function ({ text }) {
     return (
@@ -71,9 +73,9 @@ export default class Home extends Component {
                             key={index}
                             order={index}
                             title={item.title}
-                            completed={item.completed}
-                            correct={item.correct}
-                            total={item.total}
+                            completed={10}
+                            correct={4}
+                            total={10}
                             onPress={() => navigation.navigate('Quizz', item)}
                         />
                     )}

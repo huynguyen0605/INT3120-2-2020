@@ -2,6 +2,7 @@ export default {
     layout: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center'
+        paddingHorizontal: 64,
+        paddingVertical: 16
     },
 };

@@ -2,8 +2,11 @@ import axios from "../axios";
 
 const testService = {
     getRecommendTest() {
-        return axios.get('recommendTests');
+        return axios.get('test');
     },
+    getQuizz(testId) {
+        return axios.get(`quizz?testId=${testId}`)
+    }
 };
-1
+
 export default testService;
