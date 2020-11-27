@@ -29,7 +29,7 @@ export default class Home extends Component {
         tests: []
     }
     componentDidMount() {
-        testService.getRecommendTest().then(data => {
+        testService.getTest().then(data => {
             this.setState({
                 tests: data
             });

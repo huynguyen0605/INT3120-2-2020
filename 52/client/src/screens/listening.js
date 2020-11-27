@@ -3,25 +3,36 @@ import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native
 import { globalStyles } from '../styles/global';
 
 import Test from '../components/Test';
-
-import dummy from '../const/dummy';
+import testService from '../services/testService';
 
 export default class Listening extends Component {
+    state = {
+        tests: []
+    };
+    componentDidMount() {
+        testService.getTest('listening').then(data => {
+            this.setState({
+                tests: data
+            });
+        }).catch(error => {
+            console.log('huynvq::===========>error', error);
+        });
+    };
     render() {
         const { navigation } = this.props;
         return (
             <View style={globalStyles.container}>
                 <FlatList
                     style={{ flex: 1 }}
-                    data={dummy.tests}
+                    data={this.state.tests}
                     renderItem={({ item, index }) => (
                         <Test
                             key={index}
                             order={index}
                             title={item.title}
-                            completed={item.completed}
-                            correct={item.correct}
-                            total={item.total}
+                            completed={10}
+                            correct={4}
+                            total={10}
                             onPress={() => navigation.navigate('Quizz', item)}
                         />
                     )}

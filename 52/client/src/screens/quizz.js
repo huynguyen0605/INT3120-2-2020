@@ -80,7 +80,7 @@ export default class Quizz extends Component {
         testService.submitQuizz(quizzId, answer).then(data => {
             console.log('huynvq::==============>data', data);
             if (data.errcode) {
-                correctAnswer = data.data.correctAnswer;
+                correctAnswer = data.d.correctAnswer;
             };
             this.setState({
                 currentCorrectAnswer: correctAnswer

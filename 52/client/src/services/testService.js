@@ -1,8 +1,9 @@
 import axios from "../axios";
 
 const testService = {
-    getRecommendTest() {
-        return axios.get('test');
+    getTest(type) {
+        const path = type ? `test?type=${type}` : `test`;
+        return axios.get(path);
     },
     getQuizz(testId) {
         return axios.get(`quizz?testId=${testId}`);
