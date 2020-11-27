@@ -52,9 +52,10 @@ export default class Quizz extends Component {
     state = {
         quizzs: [],
         currentQuizzIndex: null,
-        visibleModal: false,
+        visibleHintModal: false,
         currentCorrectAnswer: null,
-        selectedAnswer: null
+        selectedAnswer: null,
+        visibleFinishModal: null
     };
     componentDidMount() {
         this.getQuizzs();
@@ -88,9 +89,6 @@ export default class Quizz extends Component {
             console.log('huynvq::===============>error', error);
         });
     };
-    showFinish = () => {
-
-    };
     resetAnswer = () => {
         this.setState({
             currentCorrectAnswer: null,
@@ -98,18 +96,17 @@ export default class Quizz extends Component {
         })
     };
     nextQuizz = () => {
-        const { quizzs, currentQuizzIndex, navigation } = this.state;
+        const { quizzs, currentQuizzIndex } = this.state;
         this.resetAnswer();
-        if (currentQuizzIndex < quizzs.length) {
+        if (currentQuizzIndex < quizzs.length - 1) {
             this.setState({
                 currentQuizzIndex: currentQuizzIndex + 1
             })
         } else {
-            navigation.navigate('Home', {});
+            this.showFinish();
         };
     };
     prevQuizz = () => {
-        const { navigation } = this.props;
         // const {  } = this.state;
         const { currentQuizzIndex } = this.state;
         this.resetAnswer();
@@ -118,21 +115,36 @@ export default class Quizz extends Component {
                 currentQuizzIndex: currentQuizzIndex - 1
             })
         } else {
-            navigation.navigate('Home', {});
+            this.goToHome();
         }
+    };
+
+    goToHome = () => {
+        const { navigation } = this.props;
+        navigation.navigate('Home', {});
     };
     showHint = () => {
         this.setState({
-            visibleModal: true
+            visibleHintModal: true
         });
     };
     hideHint = () => {
         this.setState({
-            visibleModal: false
+            visibleHintModal: false
+        });
+    };
+    hideFinish = () => {
+        this.setState({
+            visibleFinishModal: false
+        });
+    };
+    showFinish = () => {
+        this.setState({
+            visibleFinishModal: true
         });
     };
     render() {
-        const { quizzs, currentQuizzIndex, visibleModal, currentCorrectAnswer, selectedAnswer } = this.state,
+        const { quizzs, currentQuizzIndex, visibleHintModal, currentCorrectAnswer, selectedAnswer, visibleFinishModal } = this.state,
             currentQuizz = quizzs[currentQuizzIndex];
         let { title, answers, hint, id: quizzId } = currentQuizz ? currentQuizz : {};
         hint = hint ? hint : ``;
@@ -141,8 +153,13 @@ export default class Quizz extends Component {
             <View style={globalStyles.container}>
                 <CustomModal
                     modalText={hint}
-                    visible={visibleModal}
+                    visible={visibleHintModal}
                     onHide={this.hideHint}
+                />
+                <CustomModal
+                    modalText={`Congrate, you finished the test!`}
+                    visible={visibleFinishModal}
+                    onHide={this.goToHome}
                 />
                 <View style={styles.questionContainer}>
                     <Text style={styles.questionText}>
