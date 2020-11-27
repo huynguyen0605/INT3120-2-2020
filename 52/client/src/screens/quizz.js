@@ -55,7 +55,10 @@ export default class Quizz extends Component {
         visibleHintModal: false,
         currentCorrectAnswer: null,
         selectedAnswer: null,
-        visibleFinishModal: null
+        visibleFinishModal: null,
+        totalCorrect: null,
+        answered: null,
+        totalQuestion: null
     };
     componentDidMount() {
         this.getQuizzs();
@@ -87,6 +90,21 @@ export default class Quizz extends Component {
             })
         }).catch(error => {
             console.log('huynvq::===============>error', error);
+        });
+    };
+    getResult = () => {
+        const test = this.props.navigation.state.params;
+        const { id: testId } = test;
+        console.log('huynvq::================>testId', testId);
+        testService.getResult(testId).then(result => {
+            console.log('huynvq::==================>result', result);
+            this.setState({
+                totalCorrect: result.totalCorrectAnswer,
+                totalQuestion: result.totalQuestion,
+                answered: result.answered
+            })
+        }).catch(error => {
+            console.log('huynvq::==============>error', error);
         });
     };
     resetAnswer = () => {
@@ -139,12 +157,13 @@ export default class Quizz extends Component {
         });
     };
     showFinish = () => {
+        this.getResult();
         this.setState({
             visibleFinishModal: true
         });
     };
     render() {
-        const { quizzs, currentQuizzIndex, visibleHintModal, currentCorrectAnswer, selectedAnswer, visibleFinishModal } = this.state,
+        const { quizzs, currentQuizzIndex, visibleHintModal, currentCorrectAnswer, selectedAnswer, visibleFinishModal, totalCorrect, answered, totalQuestion } = this.state,
             currentQuizz = quizzs[currentQuizzIndex];
         let { title, answers, hint, id: quizzId } = currentQuizz ? currentQuizz : {};
         hint = hint ? hint : ``;
@@ -157,7 +176,7 @@ export default class Quizz extends Component {
                     onHide={this.hideHint}
                 />
                 <CustomModal
-                    modalText={`Congrate, you finished the test!`}
+                    modalText={`Congrate, you finished the test!\nAnswered: ${answered} / ${totalQuestion}\nCorrect: ${totalCorrect} / ${totalQuestion} `}
                     visible={visibleFinishModal}
                     onHide={this.goToHome}
                 />
