@@ -1,14 +1,20 @@
-import { FlatList, Image, Modal, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { FlatList, Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { Component } from 'react';
 
 import Answer from '../components/Answer';
 import CustomIndicator from '../components/CustomIndicator';
+import CustomModal from '../components/CustomModal';
+import SoundPlayer from '../components/SoundPlayer';
 import SvgManager from '../assets/SvgManager';
 import SvgUri from 'react-native-svg-uri';
+import config from '../config';
 import { globalStyles } from '../styles/global';
 import testService from '../services/testService';
 
-import CustomModal from '../components/CustomModal';
+const RST = {
+    SOUND: 'SOUND',
+    IMAGE: 'IMAGE'
+};
 
 const styles = StyleSheet.create({
     quizzContainer: {
@@ -165,7 +171,10 @@ export default class Quizz extends Component {
     render() {
         const { quizzs, currentQuizzIndex, visibleHintModal, currentCorrectAnswer, selectedAnswer, visibleFinishModal, totalCorrect, answered, totalQuestion } = this.state,
             currentQuizz = quizzs[currentQuizzIndex];
-        let { title, answers, hint, id: quizzId } = currentQuizz ? currentQuizz : {};
+        console.log('huynvq::===============>currentQuizz', currentQuizz);
+        let { title, answers, hint, id: quizzId, resourceType, resourceUrl } = currentQuizz ? currentQuizz : {};
+        const isSound = resourceType === RST.SOUND,
+            isImg = resourceType === RST.IMAGE;
         hint = hint ? hint : ``;
         if (!currentQuizz) return <CustomIndicator />;
         return (
@@ -176,14 +185,37 @@ export default class Quizz extends Component {
                     onHide={this.hideHint}
                 />
                 <CustomModal
-                    modalText={`Congrate, you finished the test!\nAnswered: ${answered} / ${totalQuestion}\nCorrect: ${totalCorrect} / ${totalQuestion} `}
+                    modalText={`Congrate, you finished the test\nCorrect: ${totalCorrect} / ${totalQuestion} `}
                     visible={visibleFinishModal}
                     onHide={this.goToHome}
                 />
                 <View style={styles.questionContainer}>
+                    {
+                        isSound &&
+                        <Text style={styles.questionText}>
+                            {`Listen to conversation and answer.`}
+                        </Text>
+                    }
+                    {
+                        isImg &&
+                        <Text style={styles.questionText}>
+                            {`Look at the picture and answer.`}
+                        </Text>
+                    }
                     <Text style={styles.questionText}>
                         {`${currentQuizzIndex + 1}. ${title}`}
                     </Text>
+                    {
+                        isImg &&
+                        <Image
+                            source={{ uri: config.api.STATIC_URL + resourceUrl }}
+                            style={{ width: '100%', height: 128, marginTop: 8 }}
+                        />
+                    }
+                    {
+                        isSound &&
+                        <SoundPlayer currentAudioUri={config.api.STATIC_URL + resourceUrl} />
+                    }
                 </View>
                 <View style={styles.answerContainer}>
                     <FlatList

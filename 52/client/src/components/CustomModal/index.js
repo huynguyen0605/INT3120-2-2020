@@ -1,6 +1,5 @@
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { Component } from 'react';
-
-import { StyleSheet, Modal, View, Text, TouchableOpacity } from 'react-native';
 
 // import {  } from 'react-native-gesture-handler';
 
@@ -26,7 +25,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
         width: 184,
-        height: 128,
+        height: 156,
         backgroundColor: 'white'
     },
     openButton: {
@@ -56,7 +55,7 @@ export default class CustomModal extends Component {
                             style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
                             onPress={onHide}
                         >
-                            <Text style={styles.textStyle}>Hide</Text>
+                            <Text style={styles.textStyle}>OK</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
