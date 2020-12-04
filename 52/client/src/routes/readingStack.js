@@ -10,7 +10,7 @@ const screens = {
         screen: Reading,
         navigationOptions: ({ navigation }) => {
             return {
-                headerTitle: () => <ScreenHeader title='Reading' navigation={navigation} />
+                headerTitle: () => <ScreenHeader title='Đọc' navigation={navigation} />
             }
         },
     },

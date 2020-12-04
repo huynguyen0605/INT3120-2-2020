@@ -19,28 +19,29 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#87ceeb',
         flexDirection: 'column',
-        alignItems: 'center',
+        
     },
     textStyle: {
         marginTop: textMargin
     },
     textInput: {
-        marginTop: 75,
-        width: textInputWidth,
-        backgroundColor: 'white',
-        borderRadius: 5,
-        borderWidth: 0.5,
-        borderColor: 'black',
-        paddingLeft: 5
+        height: 40,
+        backgroundColor: 'azure',
+        fontSize: 20,
+        width:'96%',
+        marginLeft:'2%',
+        borderRadius:10,
+        marginTop:'2%'
     },
     searchBtn: {
-        marginTop: 75,
+        marginTop: 10,
         width: 100,
         backgroundColor: 'white',
         borderRadius: 5,
         borderWidth: StyleSheet.hairlineWidth,
         borderColor: 'black',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        marginLeft:'2%'
     }
 });
 module.exports = { styles, customNavigationStyle };

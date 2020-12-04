@@ -9,7 +9,7 @@ const screens = {
         screen: vocabulary,
         navigationOptions: ({ navigation }) => {
             return {
-                headerTitle: () => <ScreenHeader title='Vocabulary' navigation={navigation} />
+                headerTitle: () => <ScreenHeader title='Từ điển' navigation={navigation} />
             }
         },
     },

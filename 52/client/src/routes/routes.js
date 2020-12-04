@@ -10,13 +10,13 @@ const RootDrawerNavigator = createDrawerNavigator({
     Home: {
         screen: HomeStack
     },
-    Listening: {
+    Nghe: {
         screen: ListeningStack,
     },
-    Reading: {
+    Đọc: {
         screen: ReadingStack
     },
-    Vocabulary: {
+    'Từ điển': {
         screen: VocabularyStack
     },
 });

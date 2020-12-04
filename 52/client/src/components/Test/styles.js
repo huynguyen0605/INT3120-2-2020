@@ -8,13 +8,17 @@ export default {
     header: {
         height: 48,
         width: '100%',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderRadius:10
     },
     headerText: {
         marginLeft: 12,
     },
     resultContainer: {
-        flex: 1
+        flex: 1,
+        marginBottom:10,
+        width:'96%',
+        marginLeft:'2%'
     },
     resultItem: {
         flex: 1,

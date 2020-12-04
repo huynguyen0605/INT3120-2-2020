@@ -64,13 +64,13 @@ class Vocabulary extends Component {
                 <View style={styles.pageContainer}>
                     <TextInput
                         style={styles.textInput}
-                        placeholder='Enter word to define here'
+                        placeholder='Nhập từ cần tra'
                         onChangeText={(text) => this.setState({ word: text })}
                         onSubmitEditing={Keyboard.dismiss}
                     />
                     <View style={styles.searchBtn}>
                         <Button
-                            title='Search'
+                            title='Tìm'
                             onPress={this._onPress}
                         />
                     </View>
