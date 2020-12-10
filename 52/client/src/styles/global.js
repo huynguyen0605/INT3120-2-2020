@@ -13,6 +13,7 @@ export const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 4,
+        backgroundColor: '#000033'
     },
     title: {
         fontSize: 16,
@@ -26,6 +27,7 @@ export const globalStyles = StyleSheet.create({
         width: '100%',
         backgroundColor: 'white',
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        backgroundColor: '#000033'
     }
 });

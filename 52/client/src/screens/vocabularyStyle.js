@@ -17,7 +17,7 @@ const customNavigationStyle = {
 const styles = StyleSheet.create({
     pageContainer: {
         flex: 1,
-        backgroundColor: '#87ceeb',
+        backgroundColor: '#000033',
         flexDirection: 'column',
         
     },

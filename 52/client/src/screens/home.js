@@ -7,7 +7,7 @@ import testService from '../services/testService';
 
 const styles = StyleSheet.create({
     overViewSide: { flex: 1, justifyContent: 'space-around', fontSize: 16 },
-    overViewTitle: { ...globalStyles.title },
+    overViewTitle: { ...globalStyles.title,color:'white' },
     overViewText: { ...globalStyles.text, color: '#18A0FB' }
 });
 

@@ -7,7 +7,7 @@ export default class Answer extends Component {
     render() {
         const { order, answer, submitQuizz, quizzId, currentCorrectAnswer, selectedAnswer } = this.props;
         let convertedOrder = answerOrder[order];
-        let textStyle = { color: 'black' };
+        let textStyle = { color: 'white' };
         if (currentCorrectAnswer === order) textStyle = { color: '#32CD32' };
         if (selectedAnswer === order && currentCorrectAnswer !== selectedAnswer) textStyle = { color: '#DC3545' }
         return (

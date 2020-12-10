@@ -21,14 +21,14 @@ class Test extends Component {
                 <View style={styles.resultContainer}>
                     <View style={{ ...styles.resultItem }} >
                         <ProgressBar
-                            title='Completed'
+                            title=' Completed'
                             percent={completedPercent}
                             backgroundColor={backgroundColor}
                         />
                     </View>
                     <View style={{ ...styles.resultItem }} >
                         <ProgressBar
-                            title='Correct'
+                            title=' Correct'
                             percent={correctPercent}
                             backgroundColor={backgroundColor}
                         />

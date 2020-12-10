@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         color: '#FFFFFF'
     },
     answerContainer: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#000066',
     },
     btnContainer: {
         display: 'flex',

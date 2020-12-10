@@ -9,7 +9,7 @@ class ProgressBar extends Component {
                 style={styles.layout}
             >
                 <View style={styles.titleContainer}>
-                    <Text style={{ textAlignVertical: 'center' }}>
+                    <Text style={{ textAlignVertical: 'center',color:'white' }}>
                         {title}
                     </Text>
                 </View>

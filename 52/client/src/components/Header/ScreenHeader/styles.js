@@ -7,10 +7,10 @@ export default {
         backgroundColor: 'white'
     },
     overlay: {
-        width: '100%',
+        width: '95%',
         height: '100%',
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     }
 }
